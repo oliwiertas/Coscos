@@ -3,347 +3,448 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sklep Minecraft - OG Hub Style</title>
+    <title>SpikeMC.pl - Oficjalny Sklep Serwera</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts i FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
-        :root {
-            --bg-dark: #0b0e14;
-            --card-bg: #131722;
-            --border-color: #232938;
-            --accent-blue: #00f2fe;
-            --accent-green: #00ff88;
-            --text-muted: #8f9bba;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffffff;
-        }
-
         body {
-            background-color: var(--bg-dark);
-            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #2b0808 0%, #0a0303 100%);
+            color: #f1f5f9;
+            overflow-x: hidden;
         }
-
-        header {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(180deg, rgba(24,28,39,0.9) 0%, rgba(11,14,20,0.8) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 30px;
+        /* Płynne sprężyste animacje iOS/Android */
+        .ios-bounce {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
         }
-
-        h1 {
-            font-size: 28px;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        .ios-bounce:hover {
+            transform: scale(1.03) translateY(-4px);
         }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--accent-blue);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-left: 4px solid var(--accent-blue);
-            padding-left: 10px;
+        .ios-active:active {
+            transform: scale(0.95);
         }
-
-        /* --- 1. PASEK OSTATNICH ZAKUPÓW (PRZEWIJANIE) --- */
-        .recent-purchases-container {
-            width: 100%;
-            overflow: hidden;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px 0;
-            position: relative;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        /* Czerwone, neonowe akcenty */
+        .red-glow {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.15);
         }
-
-        .ticker-wrapper {
-            display: flex;
-            width: max-content;
-            animation: scrollLeft 20s linear infinite;
+        .red-glow:hover {
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.35);
         }
-
-        .ticker-wrapper:hover {
-            animation-play-state: paused; /* Zatrzymuje przewijanie po najechaniu myszką */
+        .red-glass {
+            background: rgba(20, 10, 10, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(239, 68, 68, 0.15);
         }
-
-        @keyframes scrollLeft {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .purchase-card {
-            min-width: 160px;
-            background: #1a1f2c;
-            border: 1px solid #2d3548;
-            border-radius: 10px;
-            padding: 12px;
-            margin: 0 10px;
-            text-align: center;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .purchase-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-blue);
-        }
-
-        .purchase-card img {
-            width: 56px;
-            height: 56px;
-            border-radius: 8px;
-            background: #0f121a;
-            border: 1px solid #3a445d;
-            margin-bottom: 8px;
-        }
-
-        .player-name {
-            font-weight: bold;
-            font-size: 13px;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .item-name {
-            font-size: 11px;
-            color: var(--accent-blue);
-            margin: 4px 0;
-            font-weight: 600;
-        }
-
-        .price-tag {
-            font-size: 11px;
-            color: var(--accent-green);
-            font-weight: bold;
-            background: rgba(0, 255, 136, 0.1);
-            padding: 2px 8px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        /* --- 2. PODIUM TOP 1, TOP 2, TOP 3 --- */
-        .top-donators-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .top-card {
-            background: linear-gradient(145deg, #181d2a 0%, #11141d 100%);
-            border-radius: 14px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #2a3142;
-            transition: transform 0.3s;
-        }
-
-        .top-card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* TOP 1 - Najwyższy pośrodku */
-        .top-card.top-1 {
-            order: 2;
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
-            transform: scale(1.05);
-        }
-
-        .top-card.top-2 { order: 1; border: 2px solid #c0c0c0; }
-        .top-card.top-3 { order: 3; border: 2px solid #cd7f32; }
-
-        .rank-badge {
-            font-size: 12px;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
-
-        .top-1 .rank-badge { background: #ffd700; color: #000; }
-        .top-2 .rank-badge { background: #c0c0c0; color: #000; }
-        .top-3 .rank-badge { background: #cd7f32; color: #fff; }
-
-        .top-avatar img {
-            width: 72px;
-            height: 72px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            background: #0f121a;
-            border: 1px solid #3a445d;
-        }
-
-        .top-username {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .top-amount {
-            font-size: 14px;
-            color: var(--accent-green);
-            font-weight: bold;
-            margin-top: 4px;
-        }
+        /* Ukrycie paska przewijania dla poziomej listy zakupów */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0303; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 4px; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-    <header>
-        <h1>SKLEP OGHUB.PL</h1>
-    </header>
+    <!-- Audio Minecraft -->
+    <audio id="snd-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" preload="auto"></audio>
+    <audio id="snd-level" src="https://www.soundjay.com/buttons/sounds/button-09a.mp3" preload="auto"></audio>
+    <audio id="snd-orb" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
 
-    <!-- OSTATNIE ZAKUPY -->
-    <div class="section-title">Ostatnie Zakupy</div>
-    <div class="recent-purchases-container">
-        <div class="ticker-wrapper" id="purchases-ticker">
-            <!-- Ładowane z ViShop API -->
+    <!-- Nawigacja -->
+    <nav class="w-full max-w-7xl mx-auto px-6 py-5 flex justify-between items-center animate__animated animate__fadeInDown">
+        <div class="flex items-center gap-3">
+            <img src="spikemc.png" alt="SpikeMC Logo" class="h-16 drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]" onerror="this.style.display='none'">
+            <span class="text-2xl font-black text-red-500 tracking-wider hidden sm:block">SPIKEMC.PL</span>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button onclick="playLevel(); openModal('modal-rules')" class="red-glass hover:border-red-500 px-5 py-2.5 rounded-xl font-semibold ios-bounce ios-active flex items-center gap-2 text-sm">
+                <i class="fa-solid fa-book text-red-500"></i> Regulamin
+            </button>
+            <div class="bg-red-950/40 border border-red-500/30 px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2">
+                <span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
+                Online: <span class="font-bold text-red-400">142</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Główny Kontener -->
+    <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 my-4 flex-grow">
+        
+        <!-- Sekcja logowania i wyboru skinu -->
+        <div class="red-glass rounded-3xl p-6 sm:p-8 mb-10 red-glow animate__animated animate__fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                
+                <div class="lg:col-span-2 space-y-4">
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight uppercase">Zaloguj się do sklepu</h2>
+                    <p class="text-zinc-400 text-sm">Wprowadź swój nick z gry, aby zakupione usługi trafiły bezpośrednio do Twojego ekwipunku na serwerze.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-red-400 mb-2 tracking-wider">Nick z Minecraft</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-user absolute left-4 top-3.5 text-zinc-500"></i>
+                                <input type="text" id="mc-nick" oninput="updateSkin()" placeholder="Twój nick z gry..." class="w-full bg-black/60 border border-zinc-800 focus:border-red-500 rounded-xl py-3 pl-11 pr-4 text-white outline-none transition duration-300">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-red-400 mb-2 tracking-wider">Adres E-mail</label>
+                            <div class="relative">
+                                <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-zinc-500"></i>
+                                <input type="email" id="mc-email" placeholder="Twój e-mail..." class="w-full bg-black/60 border border-zinc-800 focus:border-red-500 rounded-xl py-3 pl-11 pr-4 text-white outline-none transition duration-300">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Podgląd postaci 3D -->
+                <div class="flex flex-col items-center justify-center bg-black/40 border border-red-900/30 rounded-2xl p-6 h-52 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-t from-red-600/10 to-transparent"></div>
+                    <img id="skin-render" src="https://mc-heads.net/body/d999297e634bcc3d" alt="Skin Render" class="h-40 drop-shadow-[0_10px_20px_rgba(239,68,68,0.3)] transition-all duration-500 transform scale-110">
+                    <p id="skin-name" class="text-xs font-bold mt-2 text-zinc-500 uppercase tracking-widest">Steve (Domyślny)</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Wybór trybów -->
+        <div class="mb-6 flex flex-wrap gap-3 animate__animated animate__fadeInUp">
+            <button onclick="playClick(); selectTab('survival')" id="btn-survival" class="tab-btn bg-red-600 text-white shadow-lg shadow-red-600/30 px-6 py-3 rounded-xl font-bold ios-bounce ios-active flex items-center gap-2">
+                <i class="fa-solid fa-axe"></i> Survival + Działki
+            </button>
+            <button onclick="playClick(); selectTab('boxpvp')" id="btn-boxpvp" class="tab-btn red-glass text-zinc-300 px-6 py-3 rounded-xl font-bold ios-bounce ios-active flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i> BoxPVP
+            </button>
+            <button onclick="playClick(); selectTab('megadrop')" id="btn-megadrop" class="tab-btn red-glass text-zinc-300 px-6 py-3 rounded-xl font-bold ios-bounce ios-active flex items-center gap-2">
+                <i class="fa-solid fa-gem"></i> SkyPVP
+            </button>
+        </div>
+
+        <!-- Karty Przedmiotów -->
+        <div id="shop-items" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate__animated animate__fadeInUp mb-12">
+            <!-- VIP -->
+            <div class="red-glass rounded-2xl p-5 flex flex-col justify-between ios-bounce relative overflow-hidden group">
+                <div class="absolute top-0 right-0 bg-red-600 text-white font-black text-[10px] px-3 py-1 rounded-bl-xl uppercase tracking-wider">Najczęstszy</div>
+                <div>
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-800 rounded-xl flex items-center justify-center text-2xl text-white font-black mb-4 shadow-lg shadow-red-600/30">VIP</div>
+                    <h3 class="text-xl font-bold group-hover:text-red-400 transition">Ranga VIP</h3>
+                    <p class="text-zinc-400 text-xs mt-1 min-h-[36px]">Dostęp do /kit vip, unikalny prefix oraz dodatkowe przywileje.</p>
+                </div>
+                <div class="mt-5 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-zinc-500 line-through block">19.99 PLN</span>
+                        <span class="text-xl font-black text-white">11.99 <span class="text-xs font-medium text-zinc-400">PLN</span></span>
+                    </div>
+                    <button onclick="playOrb(); checkoutItem('Ranga VIP', '11.99')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm ios-active transition">Kupuję</button>
+                </div>
+            </div>
+
+            <!-- SVIP -->
+            <div class="red-glass rounded-2xl p-5 flex flex-col justify-between ios-bounce relative overflow-hidden group">
+                <div class="absolute top-0 right-0 bg-amber-500 text-black font-black text-[10px] px-3 py-1 rounded-bl-xl uppercase tracking-wider">HIT</div>
+                <div>
+                    <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-red-600 rounded-xl flex items-center justify-center text-2xl text-white font-black mb-4 shadow-lg shadow-amber-500/20">SVIP</div>
+                    <h3 class="text-xl font-bold group-hover:text-amber-400 transition">Ranga SVIP</h3>
+                    <p class="text-zinc-400 text-xs mt-1 min-h-[36px]">Wszystko co VIP + kolorowy czat, własne pety oraz /fly.</p>
+                </div>
+                <div class="mt-5 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-zinc-500 line-through block">29.99 PLN</span>
+                        <span class="text-xl font-black text-white">19.99 <span class="text-xs font-medium text-zinc-400">PLN</span></span>
+                    </div>
+                    <button onclick="playOrb(); checkoutItem('Ranga SVIP', '19.99')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm ios-active transition">Kupuję</button>
+                </div>
+            </div>
+
+            <!-- Klucze -->
+            <div class="red-glass rounded-2xl p-5 flex flex-col justify-between ios-bounce relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 bg-gradient-to-br from-red-600 to-zinc-900 rounded-xl flex items-center justify-center text-2xl text-red-400 mb-4 shadow-lg shadow-red-900/40"><i class="fa-solid fa-key"></i></div>
+                    <h3 class="text-xl font-bold group-hover:text-red-400 transition">3x Klucz Legendarny</h3>
+                    <p class="text-zinc-400 text-xs mt-1 min-h-[36px]">Klucze do otwarcia unikalnej skrzyni na spawnie.</p>
+                </div>
+                <div class="mt-5 flex justify-between items-center">
+                    <div>
+                        <span class="text-xl font-black text-white">7.50 <span class="text-xs font-medium text-zinc-400">PLN</span></span>
+                    </div>
+                    <button onclick="playOrb(); checkoutItem('3x Klucz Legendarny', '7.50')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm ios-active transition">Kupuję</button>
+                </div>
+            </div>
+
+            <!-- Monety -->
+            <div class="red-glass rounded-2xl p-5 flex flex-col justify-between ios-bounce relative overflow-hidden group">
+                <div>
+                    <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-red-700 rounded-xl flex items-center justify-center text-2xl text-white mb-4 shadow-lg shadow-yellow-500/20"><i class="fa-solid fa-coins"></i></div>
+                    <h3 class="text-xl font-bold group-hover:text-yellow-400 transition">50k Coins</h3>
+                    <p class="text-zinc-400 text-xs mt-1 min-h-[36px]">Wirtualna gotówka do wykorzystania na rynku graczy.</p>
+                </div>
+                <div class="mt-5 flex justify-between items-center">
+                    <div>
+                        <span class="text-xl font-black text-white">10.00 <span class="text-xs font-medium text-zinc-400">PLN</span></span>
+                    </div>
+                    <button onclick="playOrb(); checkoutItem('Pakiet 50k Coins', '10.00')" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2.5 rounded-xl text-sm ios-active transition">Kupuję</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SEKCJA: TOP WYDATKI + OSTATNIE ZAKUPY      -->
+        <!-- ========================================== -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start my-8">
+            
+            <!-- NAJWIĘCEJ WYDANE (TOP 3) -->
+            <div class="lg:col-span-4 red-glass rounded-2xl p-5 red-glow">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-trophy text-amber-400"></i> Najwięcej wydane
+                </h3>
+                
+                <div class="space-y-3" id="vishop-top-container">
+                    <div class="text-zinc-500 text-sm text-center py-4">Ładowanie TOP graczy...</div>
+                </div>
+            </div>
+
+            <!-- OSTATNIE ZAKUPY -->
+            <div class="lg:col-span-8 red-glass rounded-2xl p-5 red-glow overflow-hidden">
+                <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-red-500"></i> Ostatnie zakupy
+                </h3>
+
+                <div class="flex gap-4 overflow-x-auto no-scrollbar pb-2" id="vishop-last-container">
+                    <div class="text-zinc-500 text-sm py-4">Ładowanie ostatnich zakupów...</div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Stopka -->
+    <footer class="w-full max-w-7xl mx-auto px-6 py-6 border-t border-zinc-900 text-center text-zinc-500 text-xs flex flex-col sm:flex-row justify-between items-center gap-4">
+        <p>&copy; 2026 SpikeMC.pl. Wszelkie prawa zastrzeżone.</p>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-red-400 transition">Polityka Prywatności</a>
+            <a href="#" onclick="openModal('modal-rules')" class="hover:text-red-400 transition">Regulamin Sklepu</a>
+        </div>
+    </footer>
+
+    <!-- MODAL: KOSZYK -->
+    <div id="modal-checkout" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-zinc-950 border border-red-900/50 rounded-3xl p-6 w-full max-w-md animate__animated animate__zoomIn animate__faster">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-red-500"></i> Podsumowanie</h3>
+                <button onclick="closeModal('modal-checkout')" class="text-zinc-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl p-4 mb-4">
+                <div class="flex justify-between text-sm">
+                    <span id="checkout-item-name" class="font-semibold text-white">-</span>
+                    <span id="checkout-item-price" class="text-red-500 font-black">-</span>
+                </div>
+                <div class="text-xs text-zinc-400 mt-1 flex gap-2">
+                    <span>Gracz: <strong id="checkout-nick" class="text-zinc-200">-</strong></span>
+                </div>
+            </div>
+            
+            <div class="mb-5">
+                <label class="block text-xs font-bold uppercase text-red-400 mb-2">Kod promocyjny</label>
+                <div class="flex gap-2">
+                    <input type="text" id="promo-code" placeholder="Np. SPIKE20" class="flex-grow bg-zinc-900 border border-zinc-800 focus:border-red-500 rounded-xl px-4 py-2.5 text-sm text-white outline-none">
+                    <button onclick="applyPromo()" class="bg-zinc-800 hover:bg-zinc-700 text-white font-bold px-4 rounded-xl text-sm transition">Zastosuj</button>
+                </div>
+                <p id="promo-msg" class="text-xs text-red-400 mt-1 hidden"><i class="fa-solid fa-check"></i> Kod aktywowany! Zniżka -20%</p>
+            </div>
+
+            <label class="block text-xs font-bold uppercase text-red-400 mb-2">Metoda płatności</label>
+            <div class="grid grid-cols-3 gap-3 mb-6">
+                <div class="bg-zinc-900 border-2 border-red-600 rounded-xl p-3 text-center cursor-pointer ios-active flex flex-col items-center justify-center">
+                    <span class="font-black text-sm tracking-wider text-white">BLIK</span>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl p-3 text-center cursor-pointer ios-active flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-credit-card text-lg text-zinc-400 mb-1"></i>
+                    <span class="text-[10px] font-bold uppercase text-zinc-400">Przelew</span>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl p-3 text-center cursor-pointer ios-active flex flex-col items-center justify-center">
+                    <i class="fa-solid fa-mobile-screen text-lg text-zinc-400 mb-1"></i>
+                    <span class="text-[10px] font-bold uppercase text-zinc-400">SMS</span>
+                </div>
+            </div>
+
+            <button onclick="playLevel(); alert('Przekierowywanie do płatności...')" class="w-full bg-red-600 hover:bg-red-500 text-white font-black py-4 rounded-xl ios-active transition duration-300">Sfinalizuj zamówienie</button>
         </div>
     </div>
 
-    <!-- TOP 3 WYDANEJ KASY -->
-    <div class="section-title">TOP Wydanej Kasy</div>
-    <div class="top-donators-grid" id="top-donators">
-        <!-- Ładowane z ViShop API -->
+    <!-- MODAL: REGULAMIN -->
+    <div id="modal-rules" class="fixed inset-0 bg-black/85 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="bg-zinc-950 border border-red-900/50 rounded-3xl p-6 w-full max-w-lg animate__animated animate__zoomIn animate__faster">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-gavel text-red-500"></i> Regulamin Sklepu</h3>
+                <button onclick="closeModal('modal-rules')" class="text-zinc-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-sm text-zinc-400 h-64 overflow-y-auto pr-2 space-y-3">
+                <p><strong>§1 Postanowienia ogólne</strong><br>Zakupy w sklepie SpikeMC.pl są dobrowolną formą wsparcia serwera.</p>
+                <p><strong>§2 Realizacja zamówień</strong><br>Usługi przyznawane są automatycznie do 15 minut od wpłaty.</p>
+            </div>
+            <button onclick="closeModal('modal-rules')" class="w-full mt-6 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white font-bold py-3 rounded-xl ios-active transition">Akceptuję</button>
+        </div>
     </div>
 
+    <!-- JAVASCRIPT -->
     <script>
-        // === KONFIGURACJA ===
-        const FALLBACK_SKIN = "d999297e634bcc3d";
         const VISHOP_API_URL = "https://panel.vishop.pl/api/30856";
+        const FALLBACK_SKIN = "d999297e634bcc3d";
 
-        // Generowanie linku do skina na podstawie nicku
-        function getSkin(username) {
-            if (!username || username.trim() === "" || username.toLowerCase() === "steve" || username.toLowerCase() === "null") {
+        function playClick() { document.getElementById('snd-click').currentTime = 0; document.getElementById('snd-click').play(); }
+        function playOrb() { document.getElementById('snd-orb').currentTime = 0; document.getElementById('snd-orb').play(); }
+        function playLevel() { document.getElementById('snd-level').currentTime = 0; document.getElementById('snd-level').play(); }
+
+        function getSkinAvatar(username) {
+            if(!username || username.trim() === "" || username.toLowerCase() === "steve" || username.toLowerCase() === "null") {
                 return `https://mc-heads.net/avatar/${FALLBACK_SKIN}/64.png`;
             }
             return `https://mc-heads.net/avatar/${encodeURIComponent(username.trim())}/64.png`;
         }
 
-        // Awaryjne ładowanie skina NameMC, gdy wystąpi błąd pobierania
         function handleImgError(img) {
             img.onerror = null;
             img.src = `https://mc-heads.net/avatar/${FALLBACK_SKIN}/64.png`;
         }
 
-        // 1. POBIERANIE OSTATNICH ZAKUPÓW Z VISHOP
-        async function loadPurchases() {
-            const container = document.getElementById('purchases-ticker');
+        function updateSkin() {
+            const nick = document.getElementById('mc-nick').value.trim();
+            const skinImg = document.getElementById('skin-render');
+            const skinName = document.getElementById('skin-name');
+
+            if(nick.length >= 3) {
+                skinImg.src = `https://mc-heads.net/body/${encodeURIComponent(nick)}`;
+                skinName.innerText = nick;
+                skinName.classList.remove('text-zinc-500');
+                skinName.classList.add('text-red-400');
+            } else {
+                skinImg.src = `https://mc-heads.net/body/${FALLBACK_SKIN}`;
+                skinName.innerText = "Steve (Domyślny)";
+                skinName.classList.remove('text-red-400');
+                skinName.classList.add('text-zinc-500');
+            }
+        }
+
+        function selectTab(mode) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.className = "tab-btn red-glass text-zinc-300 px-6 py-3 rounded-xl font-bold ios-bounce ios-active flex items-center gap-2";
+            });
+            const currentBtn = document.getElementById(`btn-${mode}`);
+            if(currentBtn) {
+                currentBtn.className = "tab-btn bg-red-600 text-white shadow-lg shadow-red-600/30 px-6 py-3 rounded-xl font-bold ios-bounce ios-active flex items-center gap-2";
+            }
+        }
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        let basePrice = 0;
+        function checkoutItem(name, price) {
+            const nick = document.getElementById('mc-nick').value.trim();
+            const email = document.getElementById('mc-email').value.trim();
+
+            if(!nick || !email) {
+                alert("Najpierw uzupełnij swój Nick i E-mail na górze strony!");
+                return;
+            }
+
+            basePrice = parseFloat(price);
+            document.getElementById('checkout-item-name').innerText = name;
+            document.getElementById('checkout-item-price').innerText = price + " PLN";
+            document.getElementById('checkout-nick').innerText = nick;
             
+            document.getElementById('promo-code').value = "";
+            document.getElementById('promo-msg').classList.add('hidden');
+
+            openModal('modal-checkout');
+        }
+
+        function applyPromo() {
+            const code = document.getElementById('promo-code').value.trim().toUpperCase();
+            if(code === "SPIKE20") {
+                const discountedPrice = (basePrice * 0.8).toFixed(2);
+                document.getElementById('checkout-item-price').innerText = discountedPrice + " PLN";
+                document.getElementById('promo-msg').classList.remove('hidden');
+                playLevel();
+            } else {
+                alert("Nieprawidłowy kod promocyjny!");
+            }
+        }
+
+        // INTEGRACJA VISHOP API
+        async function fetchViShopData() {
+            // Ostatnie zakupy
             try {
-                const res = await fetch(`${VISHOP_API_URL}/payments/v2/last`);
-                const data = await res.json();
+                const resLast = await fetch(`${VISHOP_API_URL}/payments/v2/last`);
+                const lastData = await resLast.json();
+                const lastContainer = document.getElementById('vishop-last-container');
                 
-                let html = '';
-                data.forEach(item => {
-                    html += `
-                        <div class="purchase-card">
-                            <img src="${getSkin(item.username)}" onerror="handleImgError(this)" alt="Skin">
-                            <div class="player-name">${item.username || 'Brak Nicku'}</div>
-                            <div class="item-name">${item.service_name || 'Zakup'}</div>
-                            <div class="price-tag">${item.cost || '0.00'} PLN</div>
+                if(lastData && lastData.length > 0) {
+                    lastContainer.innerHTML = lastData.map(item => `
+                        <div class="min-w-[130px] sm:min-w-[145px] bg-black/50 border border-zinc-800/80 hover:border-red-500/50 rounded-2xl p-4 flex flex-col items-center justify-center text-center ios-bounce group">
+                            <img src="${getSkinAvatar(item.username)}" onerror="handleImgError(this)" alt="Gracz" class="w-12 h-12 rounded-xl mb-3 border border-red-900/40 group-hover:scale-110 transition duration-300">
+                            <span class="font-bold text-xs text-white truncate w-full">${item.username || 'Gracz'}</span>
+                            <span class="text-[10px] text-zinc-400 mt-1 line-clamp-2">${item.service_name || 'Zakup'}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    lastContainer.innerHTML = `<div class="text-zinc-500 text-sm py-4">Brak ostatnich zakupów.</div>`;
+                }
+            } catch(e) {
+                console.warn("Błąd podczas pobierania ostatnich zakupów.");
+            }
+
+            // Najwięcej wydane (TOP 3)
+            try {
+                const resTop = await fetch(`${VISHOP_API_URL}/payments/v2/top`);
+                const topData = await resTop.json();
+                const topContainer = document.getElementById('vishop-top-container');
+
+                if(topData && topData.length >= 3) {
+                    topContainer.innerHTML = `
+                        <!-- TOP 1 -->
+                        <div class="flex items-center justify-between bg-black/40 border border-amber-500/30 rounded-xl p-3 ios-bounce">
+                            <div class="flex items-center gap-3">
+                                <span class="w-7 h-7 bg-amber-500/20 text-amber-400 font-black text-sm flex items-center justify-center rounded-lg border border-amber-500/40">1</span>
+                                <img src="${getSkinAvatar(topData[0].username)}" onerror="handleImgError(this)" alt="Skin" class="w-9 h-9 rounded-lg border border-amber-500/50">
+                                <span class="font-bold text-sm text-white tracking-wide">${topData[0].username || 'Brak'}</span>
+                            </div>
+                            <span class="bg-zinc-900 border border-zinc-800 text-amber-400 font-extrabold text-xs px-3 py-1.5 rounded-lg">${topData[0].total} zł</span>
+                        </div>
+                        <!-- TOP 2 -->
+                        <div class="flex items-center justify-between bg-black/40 border border-zinc-800/80 rounded-xl p-3 ios-bounce">
+                            <div class="flex items-center gap-3">
+                                <span class="w-7 h-7 bg-red-500/20 text-red-400 font-black text-sm flex items-center justify-center rounded-lg border border-red-500/30">2</span>
+                                <img src="${getSkinAvatar(topData[1].username)}" onerror="handleImgError(this)" alt="Skin" class="w-9 h-9 rounded-lg border border-zinc-700">
+                                <span class="font-bold text-sm text-zinc-200 tracking-wide">${topData[1].username || 'Brak'}</span>
+                            </div>
+                            <span class="bg-zinc-900 border border-zinc-800 text-zinc-300 font-extrabold text-xs px-3 py-1.5 rounded-lg">${topData[1].total} zł</span>
+                        </div>
+                        <!-- TOP 3 -->
+                        <div class="flex items-center justify-between bg-black/40 border border-zinc-800/80 rounded-xl p-3 ios-bounce">
+                            <div class="flex items-center gap-3">
+                                <span class="w-7 h-7 bg-zinc-800 text-zinc-400 font-black text-sm flex items-center justify-center rounded-lg border border-zinc-700">3</span>
+                                <img src="${getSkinAvatar(topData[2].username)}" onerror="handleImgError(this)" alt="Skin" class="w-9 h-9 rounded-lg border border-zinc-700">
+                                <span class="font-bold text-sm text-zinc-300 tracking-wide">${topData[2].username || 'Brak'}</span>
+                            </div>
+                            <span class="bg-zinc-900 border border-zinc-800 text-zinc-300 font-extrabold text-xs px-3 py-1.5 rounded-lg">${topData[2].total} zł</span>
                         </div>
                     `;
-                });
-
-                // Zdublowanie paska (html + html) zapewnia płynną, nieskończoną animację w pętli
-                container.innerHTML = html + html;
-
+                }
             } catch(e) {
-                console.warn("Błąd ładowania danych z ViShop API. Ładowanie danych testowych.");
-                
-                const mock = [
-                    { username: 'Gracz_PRO', service_name: 'VIP (30dni)', cost: '19.99' },
-                    { username: '', service_name: 'Klucz Skrzyni', cost: '4.99' },
-                    { username: 'Notch', service_name: 'SVIP (30dni)', cost: '39.99' },
-                    { username: 'BrakNicku', service_name: 'Pakiet Monet', cost: '10.00' }
-                ];
-                
-                let html = mock.map(item => `
-                    <div class="purchase-card">
-                        <img src="${getSkin(item.username)}" onerror="handleImgError(this)" alt="Skin">
-                        <div class="player-name">${item.username || 'Brak Nicku'}</div>
-                        <div class="item-name">${item.service_name}</div>
-                        <div class="price-tag">${item.cost} PLN</div>
-                    </div>
-                `).join('');
-                
-                container.innerHTML = html + html;
+                console.warn("Błąd podczas pobierania listy TOP.");
             }
         }
 
-        // 2. POBIERANIE TOP 3 WYDANEJ KASY
-        async function loadTop() {
-            const container = document.getElementById('top-donators');
-            
-            try {
-                const res = await fetch(`${VISHOP_API_URL}/payments/v2/top`);
-                const data = await res.json();
-
-                container.innerHTML = `
-                    <div class="top-card top-2">
-                        <div class="rank-badge">TOP 2</div>
-                        <div class="top-avatar"><img src="${getSkin(data[1]?.username)}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">${data[1]?.username || 'Brak'}</div>
-                        <div class="top-amount">${data[1]?.total || '0.00'} PLN</div>
-                    </div>
-                    <div class="top-card top-1">
-                        <div class="rank-badge">TOP 1</div>
-                        <div class="top-avatar"><img src="${getSkin(data[0]?.username)}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">${data[0]?.username || 'Brak'}</div>
-                        <div class="top-amount">${data[0]?.total || '0.00'} PLN</div>
-                    </div>
-                    <div class="top-card top-3">
-                        <div class="rank-badge">TOP 3</div>
-                        <div class="top-avatar"><img src="${getSkin(data[2]?.username)}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">${data[2]?.username || 'Brak'}</div>
-                        <div class="top-amount">${data[2]?.total || '0.00'} PLN</div>
-                    </div>
-                `;
-            } catch(e) {
-                container.innerHTML = `
-                    <div class="top-card top-2">
-                        <div class="rank-badge">TOP 2</div>
-                        <div class="top-avatar"><img src="${getSkin('Gracz2')}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">Gracz2</div>
-                        <div class="top-amount">150.00 PLN</div>
-                    </div>
-                    <div class="top-card top-1">
-                        <div class="rank-badge">TOP 1</div>
-                        <div class="top-avatar"><img src="${getSkin('Gracz1')}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">Gracz1</div>
-                        <div class="top-amount">300.00 PLN</div>
-                    </div>
-                    <div class="top-card top-3">
-                        <div class="rank-badge">TOP 3</div>
-                        <div class="top-avatar"><img src="${getSkin('')}" onerror="handleImgError(this)"></div>
-                        <div class="top-username">Brak Nicku</div>
-                        <div class="top-amount">50.00 PLN</div>
-                    </div>
-                `;
-            }
-        }
-
-        // Automatyczny start po załadowaniu strony
-        document.addEventListener('DOMContentLoaded', () => {
-            loadPurchases();
-            loadTop();
-        });
+        document.addEventListener('DOMContentLoaded', fetchViShopData);
     </script>
 </body>
 </html>

@@ -2,30 +2,65 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Sklep Minecraft - OGHUB Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklep Minecraft - OG Hub Style</title>
     <style>
         :root {
             --bg-dark: #0b0e14;
             --card-bg: #131722;
+            --border-color: #232938;
             --accent-blue: #00f2fe;
             --accent-green: #00ff88;
             --text-muted: #8f9bba;
         }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+
         body {
             background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            margin: 0;
             padding: 20px;
         }
 
-        /* --- SEKCJA OSTATNICH ZAKUPÓW (PRZEWIJANIE OD PRAWEJ DO LEWEJ) --- */
+        header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(180deg, rgba(24,28,39,0.9) 0%, rgba(11,14,20,0.8) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--accent-blue);
+            padding-left: 10px;
+        }
+
+        /* --- 1. PASEK OSTATNICH ZAKUPÓW (PRZEWIJANIE) --- */
         .recent-purchases-container {
             width: 100%;
             overflow: hidden;
             background: var(--card-bg);
-            border: 1px solid #232938;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 15px 0;
             position: relative;
@@ -36,11 +71,11 @@
         .ticker-wrapper {
             display: flex;
             width: max-content;
-            animation: scrollLeft 25s linear infinite;
+            animation: scrollLeft 20s linear infinite;
         }
 
         .ticker-wrapper:hover {
-            animation-play-state: paused; /* Zatrzymaj po najechaniu myszką */
+            animation-play-state: paused; /* Zatrzymuje przewijanie po najechaniu myszką */
         }
 
         @keyframes scrollLeft {
@@ -75,7 +110,7 @@
 
         .player-name {
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
@@ -83,14 +118,14 @@
         }
 
         .item-name {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent-blue);
             margin: 4px 0;
             font-weight: 600;
         }
 
         .price-tag {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent-green);
             font-weight: bold;
             background: rgba(0, 255, 136, 0.1);
@@ -99,17 +134,7 @@
             display: inline-block;
         }
 
-        /* --- SEKCJA TOP 1 / TOP 2 / TOP 3 (KASA) --- */
-        .section-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
+        /* --- 2. PODIUM TOP 1, TOP 2, TOP 3 --- */
         .top-donators-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -123,7 +148,6 @@
             border-radius: 14px;
             padding: 20px;
             text-align: center;
-            position: relative;
             border: 1px solid #2a3142;
             transition: transform 0.3s;
         }
@@ -132,13 +156,14 @@
             transform: translateY(-5px);
         }
 
-        /* TOP 1 - Środek wyróżniony */
+        /* TOP 1 - Najwyższy pośrodku */
         .top-card.top-1 {
             order: 2;
             border: 2px solid #ffd700;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
             transform: scale(1.05);
         }
+
         .top-card.top-2 { order: 1; border: 2px solid #c0c0c0; }
         .top-card.top-3 { order: 3; border: 2px solid #cd7f32; }
 
@@ -155,160 +180,169 @@
         .top-2 .rank-badge { background: #c0c0c0; color: #000; }
         .top-3 .rank-badge { background: #cd7f32; color: #fff; }
 
-        .top-avatar {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 10px;
-        }
-
         .top-avatar img {
-            width: 100%;
-            height: 100%;
+            width: 72px;
+            height: 72px;
             border-radius: 10px;
+            margin-bottom: 8px;
+            background: #0f121a;
+            border: 1px solid #3a445d;
         }
 
         .top-username {
             font-size: 16px;
             font-weight: bold;
-            color: #fff;
         }
 
         .top-amount {
             font-size: 14px;
             color: var(--accent-green);
             font-weight: bold;
-            margin-top: 6px;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
 
+    <header>
+        <h1>SKLEP OGHUB.PL</h1>
+    </header>
+
     <!-- OSTATNIE ZAKUPY -->
     <div class="section-title">Ostatnie Zakupy</div>
     <div class="recent-purchases-container">
         <div class="ticker-wrapper" id="purchases-ticker">
-            <!-- Zakupy ładowane dynamicznie z ViShop API -->
+            <!-- Ładowane z ViShop API -->
         </div>
     </div>
 
     <!-- TOP 3 WYDANEJ KASY -->
-    <div class="section-title">Top Wspierający</div>
+    <div class="section-title">TOP Wydanej Kasy</div>
     <div class="top-donators-grid" id="top-donators">
-        <!-- TOP 1, TOP 2, TOP 3 ładowane dynamicznie z ViShop API -->
+        <!-- Ładowane z ViShop API -->
     </div>
 
     <script>
-        // TE SKINY BĘDĄ UŻYWANE JAKO FALLBACK
-        const FALLBACK_SKIN_HASH = "d999297e634bcc3d"; 
-        
-        // KONFIGURACJA VISHOP API
-        // Zastąp poniższy URL swoim adresem ze sklepu ViShop
-        const VISHOP_API_URL = "https://twojsklep.vishop.pl/api";
+        // === KONFIGURACJA ===
+        const FALLBACK_SKIN = "d999297e634bcc3d";
+        const VISHOP_API_URL = "https://panel.vishop.pl/api/30856";
 
-        function getSkinUrl(username) {
-            if (!username || username === "" || username.toLowerCase() === "steve") {
-                return `https://mc-heads.net/avatar/${FALLBACK_SKIN_HASH}/64.png`;
+        // Generowanie linku do skina na podstawie nicku
+        function getSkin(username) {
+            if (!username || username.trim() === "" || username.toLowerCase() === "steve" || username.toLowerCase() === "null") {
+                return `https://mc-heads.net/avatar/${FALLBACK_SKIN}/64.png`;
             }
-            return `https://mc-heads.net/avatar/${encodeURIComponent(username)}/64.png`;
+            return `https://mc-heads.net/avatar/${encodeURIComponent(username.trim())}/64.png`;
         }
 
-        function handleSkinError(img) {
+        // Awaryjne ładowanie skina NameMC, gdy wystąpi błąd pobierania
+        function handleImgError(img) {
             img.onerror = null;
-            img.src = `https://mc-heads.net/avatar/${FALLBACK_SKIN_HASH}/64.png`;
+            img.src = `https://mc-heads.net/avatar/${FALLBACK_SKIN}/64.png`;
         }
 
-        // 1. ŁADOWANIE OSTATNICH ZAKUPÓW Z VISHOP
-        async function loadLastPurchases() {
+        // 1. POBIERANIE OSTATNICH ZAKUPÓW Z VISHOP
+        async function loadPurchases() {
             const container = document.getElementById('purchases-ticker');
             
             try {
                 const res = await fetch(`${VISHOP_API_URL}/payments/v2/last`);
                 const data = await res.json();
                 
-                // Tworzymy elementy
-                let itemsHtml = '';
+                let html = '';
                 data.forEach(item => {
-                    const skin = getSkinUrl(item.username);
-                    itemsHtml += `
+                    html += `
                         <div class="purchase-card">
-                            <img src="${skin}" onerror="handleSkinError(this)" alt="${item.username}">
-                            <div class="player-name">${item.username || 'Gracz'}</div>
+                            <img src="${getSkin(item.username)}" onerror="handleImgError(this)" alt="Skin">
+                            <div class="player-name">${item.username || 'Brak Nicku'}</div>
                             <div class="item-name">${item.service_name || 'Zakup'}</div>
                             <div class="price-tag">${item.cost || '0.00'} PLN</div>
                         </div>
                     `;
                 });
 
-                // Duplikujemy zawartość (2x), aby uzyskać płynną, nieskończoną animację pętli
-                container.innerHTML = itemsHtml + itemsHtml;
+                // Zdublowanie paska (html + html) zapewnia płynną, nieskończoną animację w pętli
+                container.innerHTML = html + html;
 
-            } catch (err) {
-                console.error("Błąd ładowania zakupów ViShop:", err);
-                // Domyślne zapasowe dane testowe, jeśli API nie odpowiada
-                renderFallbackPurchases(container);
+            } catch(e) {
+                console.warn("Błąd ładowania danych z ViShop API. Ładowanie danych testowych.");
+                
+                const mock = [
+                    { username: 'Gracz_PRO', service_name: 'VIP (30dni)', cost: '19.99' },
+                    { username: '', service_name: 'Klucz Skrzyni', cost: '4.99' },
+                    { username: 'Notch', service_name: 'SVIP (30dni)', cost: '39.99' },
+                    { username: 'BrakNicku', service_name: 'Pakiet Monet', cost: '10.00' }
+                ];
+                
+                let html = mock.map(item => `
+                    <div class="purchase-card">
+                        <img src="${getSkin(item.username)}" onerror="handleImgError(this)" alt="Skin">
+                        <div class="player-name">${item.username || 'Brak Nicku'}</div>
+                        <div class="item-name">${item.service_name}</div>
+                        <div class="price-tag">${item.cost} PLN</div>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = html + html;
             }
         }
 
-        // 2. ŁADOWANIE TOP 3 WYDANEJ KASY
-        async function loadTopDonators() {
+        // 2. POBIERANIE TOP 3 WYDANEJ KASY
+        async function loadTop() {
             const container = document.getElementById('top-donators');
-
+            
             try {
                 const res = await fetch(`${VISHOP_API_URL}/payments/v2/top`);
-                const data = await res.json(); // Oczekiwane 3 rekordy
+                const data = await res.json();
 
                 container.innerHTML = `
                     <div class="top-card top-2">
                         <div class="rank-badge">TOP 2</div>
-                        <div class="top-avatar">
-                            <img src="${getSkinUrl(data[1]?.username)}" onerror="handleSkinError(this)">
-                        </div>
+                        <div class="top-avatar"><img src="${getSkin(data[1]?.username)}" onerror="handleImgError(this)"></div>
                         <div class="top-username">${data[1]?.username || 'Brak'}</div>
                         <div class="top-amount">${data[1]?.total || '0.00'} PLN</div>
                     </div>
                     <div class="top-card top-1">
                         <div class="rank-badge">TOP 1</div>
-                        <div class="top-avatar">
-                            <img src="${getSkinUrl(data[0]?.username)}" onerror="handleSkinError(this)">
-                        </div>
+                        <div class="top-avatar"><img src="${getSkin(data[0]?.username)}" onerror="handleImgError(this)"></div>
                         <div class="top-username">${data[0]?.username || 'Brak'}</div>
                         <div class="top-amount">${data[0]?.total || '0.00'} PLN</div>
                     </div>
                     <div class="top-card top-3">
                         <div class="rank-badge">TOP 3</div>
-                        <div class="top-avatar">
-                            <img src="${getSkinUrl(data[2]?.username)}" onerror="handleSkinError(this)">
-                        </div>
+                        <div class="top-avatar"><img src="${getSkin(data[2]?.username)}" onerror="handleImgError(this)"></div>
                         <div class="top-username">${data[2]?.username || 'Brak'}</div>
                         <div class="top-amount">${data[2]?.total || '0.00'} PLN</div>
                     </div>
                 `;
-            } catch (err) {
-                console.error("Błąd ładowania Top Donators:", err);
+            } catch(e) {
+                container.innerHTML = `
+                    <div class="top-card top-2">
+                        <div class="rank-badge">TOP 2</div>
+                        <div class="top-avatar"><img src="${getSkin('Gracz2')}" onerror="handleImgError(this)"></div>
+                        <div class="top-username">Gracz2</div>
+                        <div class="top-amount">150.00 PLN</div>
+                    </div>
+                    <div class="top-card top-1">
+                        <div class="rank-badge">TOP 1</div>
+                        <div class="top-avatar"><img src="${getSkin('Gracz1')}" onerror="handleImgError(this)"></div>
+                        <div class="top-username">Gracz1</div>
+                        <div class="top-amount">300.00 PLN</div>
+                    </div>
+                    <div class="top-card top-3">
+                        <div class="rank-badge">TOP 3</div>
+                        <div class="top-avatar"><img src="${getSkin('')}" onerror="handleImgError(this)"></div>
+                        <div class="top-username">Brak Nicku</div>
+                        <div class="top-amount">50.00 PLN</div>
+                    </div>
+                `;
             }
         }
 
-        function renderFallbackPurchases(container) {
-            const mockData = [
-                { username: 'Notch', service_name: 'VIP', cost: '19.99' },
-                { username: '', service_name: 'Klucz Skrzyni', cost: '4.99' },
-                { username: 'Jeb_', service_name: 'SVIP', cost: '39.99' }
-            ];
-            let html = mockData.map(item => `
-                <div class="purchase-card">
-                    <img src="${getSkinUrl(item.username)}" onerror="handleSkinError(this)">
-                    <div class="player-name">${item.username || 'Brak Nicku'}</div>
-                    <div class="item-name">${item.service_name}</div>
-                    <div class="price-tag">${item.cost} PLN</div>
-                </div>
-            `).join('');
-            container.innerHTML = html + html;
-        }
-
-        // Inicjalizacja pobierania przy załadowaniu strony
+        // Automatyczny start po załadowaniu strony
         document.addEventListener('DOMContentLoaded', () => {
-            loadLastPurchases();
-            loadTopDonators();
+            loadPurchases();
+            loadTop();
         });
     </script>
 </body>
